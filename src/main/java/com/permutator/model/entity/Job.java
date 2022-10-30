@@ -1,14 +1,16 @@
 package com.permutator.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "jobs")
 @Getter
+@Setter
+@Builder
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
 public class Job {
