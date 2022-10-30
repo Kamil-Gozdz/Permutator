@@ -23,11 +23,15 @@ public class JobController {
         return jobService.getAllJobs();
     }
 
+    @GetMapping("/get/all/running/{isRunning}")
+    public List<Job> getRunningJobs(@PathVariable boolean isRunning) {
+        return jobService.getActiveJobs(isRunning);
+    }
+
     @PostMapping("/post")
     public Job createJob(@RequestBody Job job) throws IOException {
-        var response = jobService.saveJob(job);
         fileService.saveFile(job);
-        return response;
+        return jobService.saveJob(job);
     }
 
     @GetMapping("/get/results/{fileName}")

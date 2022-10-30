@@ -1,13 +1,14 @@
 package com.permutator.service.permutation;
 
 
+import com.permutator.exception.NotEnoughPermutationException;
 import com.permutator.model.entity.Job;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,12 +16,11 @@ import java.util.stream.Collectors;
 @Setter
 @RequiredArgsConstructor
 public class PermutationServiceImpl implements PermutationService {
-    private final List<String> permutations;
-
+    private final Set<String> permutations;
 
 
     @Override
-    public List<String> getPermutations(Job job) {
+    public Set<String> getPermutations(Job job) {
         for (int j = 1; j <= job.getLetters().length(); j++) {
             permute("", job.getLetters(), j);
         }
@@ -48,12 +48,16 @@ public class PermutationServiceImpl implements PermutationService {
     }
 
     @Override
-    public List<String> getStringBySpecificData(Job job) {
-        List<String> strings = getPermutations(job);
-        return strings.stream()
+    public Set<String> getStringBySpecificData(Job job) {
+        Set<String> strings = getPermutations(job);
+        Set<String> filteredStrings = strings.parallelStream()
                 .filter(p -> (p.length() <= job.getMaxLength()))
                 .filter(p -> (p.length() >= job.getMinLength()))
                 .limit(job.getStringAmount())
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
+        if (job.getStringAmount() > strings.size()) {
+            throw new NotEnoughPermutationException();
+        }
+        return filteredStrings;
     }
 }

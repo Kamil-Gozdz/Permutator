@@ -8,6 +8,6 @@ public interface FileService {
 
     void saveFile(Job job) throws IOException;
 
-    String getData(String fileName);
+    String getData(String name);
 
 }

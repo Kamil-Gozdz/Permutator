@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.*;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,8 +22,9 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
+    @Transactional
     public void saveFile(Job job) throws IOException {
-        List<String> data = permutationService.getStringBySpecificData(job);
+        Set<String> data = permutationService.getStringBySpecificData(job);
         File file = new File(path + job.getFileName() + ".txt");
         FileWriter fw = new FileWriter(file);
         for (String str : data) {
@@ -30,6 +32,9 @@ public class FileServiceImpl implements FileService {
         }
         fw.flush();
         fw.close();
+        if(file.exists()){
+            job.setRunning(false);
+        }
     }
 
     @Override

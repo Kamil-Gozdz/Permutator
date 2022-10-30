@@ -1,7 +1,8 @@
 package com.permutator.model.entity;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
+
+
 
 import javax.persistence.*;
 
@@ -10,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@Component
 @NoArgsConstructor
 @AllArgsConstructor
 public class Job {
@@ -28,4 +28,6 @@ public class Job {
     private String letters;
 
     private int stringAmount;
+
+    private boolean isRunning = true;
 }

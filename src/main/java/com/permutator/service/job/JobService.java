@@ -8,5 +8,7 @@ public interface JobService {
 
     List<Job> getAllJobs();
 
+    List<Job> getActiveJobs(boolean isRunning);
+
     Job saveJob(Job job);
 }
