@@ -1,0 +1,1 @@
+Aplikacja podająca wszystkie możliwe kombinacje z podanego łańcucha znaków i zapisująca je do pliku .txt. Użytkownik może podać minimalną i maksymalną długość łańcucha w rezultacie, z jakich znaków ma się składać i ile łańcuchów chce uzyskać. 
